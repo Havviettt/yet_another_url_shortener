@@ -1,0 +1,12 @@
+build/
+cmake-build-*/
+compile_commands.json
+
+.env
+.env.*
+
+.idea/
+.vscode/
+
+*.log
+.DS_Store
