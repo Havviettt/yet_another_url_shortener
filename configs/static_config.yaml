@@ -1,0 +1,86 @@
+components_manager:
+  task_processors:
+    main-task-processor:
+      worker_threads: $worker-threads
+    fs-task-processor:
+      worker_threads: $worker-fs-threads
+
+  default_task_processor: main-task-processor
+
+  components:
+    server:
+      listener:
+        port: $server-port
+        task_processor: main-task-processor
+      listener-monitor:
+        port: $monitor-port
+        task_processor: main-task-processor
+
+    logging:
+      fs-task-processor: fs-task-processor
+      loggers:
+        default:
+          file_path: '@stderr'
+          level: $logger-level
+          format: json
+          overflow_behavior: discard
+
+    dynamic-config:
+      defaults:
+        POSTGRES_DEFAULT_COMMAND_CONTROL:
+          network_timeout_ms: 750
+          statement_timeout_ms: 500
+
+    testsuite-support: {}
+
+    # Required by tests-control when functional tests are running.
+    http-client:
+      load-enabled: $is-testing
+
+    http-client-core:
+      load-enabled: $is-testing
+      fs-task-processor: fs-task-processor
+
+    tests-control:
+      load-enabled: $is-testing
+      path: /tests/{action}
+      method: POST
+      task_processor: main-task-processor
+
+    dns-client:
+      fs-task-processor: fs-task-processor
+
+    handler-health:
+      path: /health
+      method: GET
+      task_processor: main-task-processor
+      throttling_enabled: false
+
+    handler-create-url:
+      path: /v1/urls
+      method: POST
+      task_processor: main-task-processor
+
+    handler-url-management:
+      path: /v1/urls/{short_code}
+      method: GET,DELETE
+      task_processor: main-task-processor
+
+    handler-redirect:
+      path: /{short_code}
+      method: GET
+      task_processor: main-task-processor
+
+    handler-server-monitor:
+      path: /metrics
+      method: GET
+      task_processor: main-task-processor
+      format: prometheus
+
+    postgres-db-1:
+      dbconnection: $pg-connection
+      dbconnection#env: DB_CONNECTION
+      blocking_task_processor: fs-task-processor
+      dns_resolver: async
+      sync-start: true
+      connlimit_mode: manual

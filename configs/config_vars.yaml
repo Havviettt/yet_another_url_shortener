@@ -1,0 +1,7 @@
+worker-threads: 4
+worker-fs-threads: 2
+logger-level: info
+is-testing: false
+server-port: 8080
+monitor-port: 8081
+pg-connection: postgresql://url_shortener:url_shortener@postgres:5432/url_shortener

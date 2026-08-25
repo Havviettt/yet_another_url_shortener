@@ -1,0 +1,10 @@
+.git
+.cache
+.ccache
+.cores
+__pycache__
+.pytest_cache
+build-debug
+build-release
+Testing
+*.log

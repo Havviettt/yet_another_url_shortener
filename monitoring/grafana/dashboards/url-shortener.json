@@ -1,0 +1,54 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "URLs created",
+      "id": 1,
+      "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0},
+      "targets": [{"expr": "url_shortener_urls_created", "legendFormat": "created", "refId": "A"}]
+    },
+    {
+      "type": "stat",
+      "title": "Redirects completed",
+      "id": 2,
+      "gridPos": {"h": 8, "w": 6, "x": 6, "y": 0},
+      "targets": [{"expr": "url_shortener_redirects_completed", "legendFormat": "redirects", "refId": "A"}]
+    },
+    {
+      "type": "stat",
+      "title": "Validation errors",
+      "id": 3,
+      "gridPos": {"h": 8, "w": 6, "x": 12, "y": 0},
+      "targets": [{"expr": "url_shortener_validation_errors", "legendFormat": "validation", "refId": "A"}]
+    },
+    {
+      "type": "stat",
+      "title": "Not found",
+      "id": 4,
+      "gridPos": {"h": 8, "w": 6, "x": 18, "y": 0},
+      "targets": [{"expr": "url_shortener_not_found", "legendFormat": "not found", "refId": "A"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "Business events per second",
+      "id": 5,
+      "gridPos": {"h": 9, "w": 24, "x": 0, "y": 8},
+      "targets": [
+        {"expr": "rate(url_shortener_urls_created[1m])", "legendFormat": "created", "refId": "A"},
+        {"expr": "rate(url_shortener_redirects_completed[1m])", "legendFormat": "redirects", "refId": "B"},
+        {"expr": "rate(url_shortener_validation_errors[1m])", "legendFormat": "validation errors", "refId": "C"}
+      ]
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 39,
+  "tags": ["userver", "url-shortener"],
+  "templating": {"list": []},
+  "time": {"from": "now-15m", "to": "now"},
+  "timezone": "browser",
+  "title": "URL Shortener Overview",
+  "uid": "url-shortener-overview",
+  "version": 1
+}
